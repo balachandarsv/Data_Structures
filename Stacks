@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<conio.h>
+void push(int *array,int x,int *top)
+{
+*(array+*top)=x;
+*top=*top+1;
+}
+int pop(int *array,int *top)
+{
+int x=*(array+*top-1);
+*top=*top-1;
+return x;
+}
+void peek(int *array,int *top)
+{
+if(*top-1<0)
+printf("Stack Empty");
+else
+printf("%d",*(array+*top-1));
+}
+void display(int *array,int *top)
+{
+int i;
+for(i=0;i<=*top-1;i++)
+printf("%d\t",*(array+i));
+}
+void main()
+{
+int size,*top=0,*array,ch,l=0,x;
+clrscr();
+printf("Enter the size of array");
+scanf("%d",&size);
+array=(int*)malloc(2*size);
+do
+{
+printf("Enter 1.Push 2.Pop 3.Peek 4.Display :");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:if(*top<size)
+	{
+	printf("Enter the element to insert : ");
+	scanf("%d",&x) ;
+	push(array,x,top);
+	}
+	else
+	{
+	printf("Stack Full");
+	}
+	break;
+case 2:if(*top-1<0)
+	printf("Stack Empty");
+	else
+	{
+	x=pop(array,top);
+	printf("Element popped out is %d",x);
+	}
+	break;
+case 3:peek(array,top);
+	break;
+case 4:display(array,top);
+	break;
+case 5:l=1;
+	break;
+default:printf("Invalid Choice");
+}
+}while(l==0);
+getch();
+}
+
+
+
