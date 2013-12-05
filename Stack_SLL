@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *link;
+};
+struct head
+{
+int count;
+struct node *link;
+};
+void insert(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+printf("Enter the data");
+scanf("%d",&current->data);
+current->link=heads->link;
+heads->link=current;
+heads->count=heads->count+1;
+}
+int delet(struct head *heads)
+{  int val;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+val=current->data;
+heads->link=current->link;
+heads->count=heads->count-1;
+free(current);
+return val;
+}
+int peek(struct head *heads)
+{struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+return current->data;
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->link;
+}
+}
+void main()
+{   int i,x,y;
+struct head *heads=(struct head*)malloc(sizeof(struct head));
+clrscr();
+heads->count=0;
+heads->link=NULL;
+for(i=0;i<5;i++)
+{
+insert(heads);
+}
+for(i=0;i<5;i++)
+{
+printf("\ndel= %d",delet(heads));
+printf("Peek= %d",peek(heads));
+}
+
+
+getch();
+}
