@@ -1,0 +1,116 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *link;
+};
+struct head
+{
+int count;
+struct node *link;
+};
+void insert(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+if(heads->count==0)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->link=NULL;
+heads->link=current;
+heads->count++;
+}
+else
+{int pos,c=1;
+printf("Enter the position :");
+scanf("%d",&pos);
+if(pos==1)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->link=heads->link;
+heads->link=current;
+heads->count=heads->count+1;
+}
+else
+{struct node *temp=(struct node*)malloc(sizeof(struct node));
+temp=heads->link;
+while(c<pos-1)
+{
+temp=temp->link;
+c++;
+}
+if(pos>heads->count+1)
+printf("Invalid Position");
+else
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->link=temp->link;
+temp->link=current;
+heads->count=heads->count+1;
+}
+}
+}
+}
+void delet(struct head *heads)
+{       int pos,c=1,val;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+struct node *temp=(struct node*)malloc(sizeof(struct node));
+printf("Enter the position to delete");
+scanf("%d",&pos);
+if(pos==1)
+{current=heads->link;
+printf("\n Deleted: %d",current->data);
+heads->link=current->link;
+heads->count=heads->count-1;
+}
+else
+{
+temp=heads->link;
+while(c<pos-1)
+{
+temp=temp->link;
+c++;
+}
+if(pos>heads->count+1)
+printf("Invalid Position");
+else
+{current=temp->link;
+val=current->data;
+printf("\n Deleted:",val);
+temp->link=current->link;
+heads->count=heads->count-1;
+}
+}
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->link;
+}
+}
+void main()
+{   int i;
+struct head *heads=(struct head*)malloc(sizeof(struct head));
+clrscr();
+heads->count=0;
+heads->link=NULL;
+for(i=0;i<5;i++)
+{
+insert(heads);
+display(heads);
+}
+for(i=0;i<5;i++)
+{
+delet(heads);
+display(heads);
+}
+
+getch();
+}
