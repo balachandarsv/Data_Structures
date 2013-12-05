@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<conio.h>
+void manage(int *arr, int i)
+{
+ int tmp; 
+ tmp=arr[i];
+ while((i>1)&&(arr[i/2]<tmp))
+ {
+   arr[i]=arr[i/2];
+   i=i/2;
+ }
+ arr[i]=tmp;
+}
+
+void heapsort(int *array,int i,int size)
+{
+int temp=array[i],j=i*2;
+while(j<=size)
+{
+if((j<size)&&(array[j]<array[j+1]))
+j++;
+if(array[j]<array[j/2])
+break;
+array[j/2]=array[j];
+j=j*2;
+}
+array[j/2]=temp;
+}
+
+int main()
+{
+ int arr[20]; 
+ int i,j,size,tmp,k;
+ printf("\n\t------- Heap sorting method -------\n\n");
+ printf("Enter the number of elements to sort : ");
+ scanf("%d",&size);
+ for(i=1; i<=size; i++)
+ {
+   printf("Enter %d element : ",i);
+   scanf("%d",&arr[i]);
+   manage(arr,i);
+ }
+ j=size;
+ for(i=1; i<=j; i++)
+ {
+   tmp=arr[1];
+   arr[1]=arr[size];
+   arr[size]=tmp;
+   size--;
+   heapsort(arr,1,size);
+ }
+ printf("\n\t------- Heap sorted elements -------\n\n");
+ size=j;
+ for(i=1; i<=size; i++)
+     printf("%d ",arr[i]);
+ getch();
+ return 0;
+}
+
