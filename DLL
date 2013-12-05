@@ -1,0 +1,124 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *next;
+struct node *prev;
+};
+struct head
+{
+int count;
+struct node *next;
+};
+void insert(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+if(heads->count==0)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=NULL;
+current->prev=NULL;
+heads->next=current;
+heads->count++;
+}
+else
+{int pos,c=1;
+printf("Enter the position :");
+scanf("%d",&pos);
+if(pos==1)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=heads->next;
+heads->next->prev=current;
+heads->next=current;
+heads->count=heads->count+1;
+}
+else
+{struct node *temp=(struct node*)malloc(sizeof(struct node));
+temp=heads->next;
+while(c<pos-1)
+{
+temp=temp->next;
+c++;
+}
+if(pos>heads->count+1)
+printf("Invalid Position");
+else
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=temp->next;
+current->prev=temp;
+temp->next=current;
+heads->count=heads->count+1;
+}
+}
+}
+}
+void delet(struct head *heads)
+{       int pos,c=1,val;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+struct node *temp=(struct node*)malloc(sizeof(struct node));
+printf("Enter the position to delete");
+scanf("%d",&pos);
+
+if(pos==1)
+{current=heads->next;
+val=current->data;
+heads->next=current->next;
+heads->next->prev=NULL;
+heads->count=heads->count-1;
+free(current);
+}
+else
+{
+temp=heads->next;
+while(c<pos-1)
+{
+temp=temp->next;
+c++;
+}
+if(pos>heads->count)
+printf("Invalid Position");
+else
+{current=temp->next;
+val=current->data;
+temp->next=current->next;
+current->next->prev=temp;
+heads->count=heads->count-1;
+free(current);
+}
+}
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->next;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->next;
+}
+}
+void main()
+{   int i;
+struct head *heads=(struct head*)malloc(sizeof(struct head));
+clrscr();
+heads->count=0;
+heads->next=NULL;
+for(i=0;i<5;i++)
+{
+insert(heads);
+display(heads);
+}
+for(i=0;i<5;i++)
+{
+delet(heads);
+display(heads);
+}
+
+getch();
+}
