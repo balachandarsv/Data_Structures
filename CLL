@@ -1,0 +1,128 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *next;
+struct node *prev;
+};
+struct head
+{
+int count;
+struct node *first;
+struct node *last;
+};
+void insert(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+if(heads->count==0)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=NULL;
+current->prev=NULL;
+heads->first=current;
+heads->last=current;
+heads->count++;
+}
+else
+{int pos,c=1;
+printf("Enter the position :");
+scanf("%d",&pos);
+if(pos==1)
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=heads->first;
+heads->first->prev=current;
+heads->first=current;
+heads->count=heads->count+1;
+}
+else
+{struct node *temp=(struct node*)malloc(sizeof(struct node));
+temp=heads->first;
+while(c<pos-1)
+{
+temp=temp->next;
+c++;
+}
+if(pos>heads->count+1)
+printf("Invalid Position");
+else
+{
+printf("Enter the data");
+scanf("%d",&current->data);
+current->next=temp->next;
+current->prev=temp;
+temp->next=current;
+heads->count=heads->count+1;
+}
+}
+}
+}
+void delet(struct head *heads)
+{       int pos,c=1,val;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+struct node *temp=(struct node*)malloc(sizeof(struct node));
+printf("Enter the position to delete");
+scanf("%d",&pos);
+
+if(pos==1)
+{current=heads->first;
+val=current->data;
+heads->first=current->next;
+heads->first->prev=NULL;
+heads->count=heads->count-1;
+free(current);
+}
+else
+{
+temp=heads->first;
+while(c<pos-1)
+{
+temp=temp->next;
+c++;
+}
+if(pos>heads->count)
+printf("Invalid Position");
+else
+{current=temp->next;
+val=current->data;
+temp->next=current->next;
+current->next->prev=temp;
+if(pos==heads->count)
+current->next=heads->first;
+heads->count=heads->count-1;
+free(current);
+}
+}
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->first;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->next;
+}
+}
+void main()
+{   int i;
+struct head *heads=(struct head*)malloc(sizeof(struct head));
+clrscr();
+heads->count=0;
+heads->first=NULL;
+for(i=0;i<5;i++)
+{
+insert(heads);
+display(heads);
+}
+for(i=0;i<5;i++)
+{
+delet(heads);
+display(heads);
+}
+
+getch();
+}
