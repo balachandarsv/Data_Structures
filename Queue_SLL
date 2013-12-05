@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *link;
+};
+struct head
+{
+int count;
+struct node *link;
+};
+void insert(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+struct node *temp=(struct node*)malloc(sizeof(struct node));
+temp=heads->link;
+
+while(temp->link!=NULL)
+{
+temp=temp->link;
+}
+printf("Enter the data");
+scanf("%d",&current->data);
+current->link=NULL;
+temp->link=current;
+heads->count=heads->count+1;
+
+}
+
+
+
+void delet(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+heads->link=current->link;
+printf("\n Deleted: %d\t\t",current->data);
+heads->count=heads->count-1;
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->link;
+}
+}
+void main()
+{   int i;
+struct head *heads=(struct head*)malloc(sizeof(struct head));
+clrscr();
+heads->count=0;
+heads->link=NULL;
+for(i=0;i<5;i++)
+{
+insert(heads);
+
+}
+
+for(i=0;i<5;i++)
+{
+delet(heads);
+display(heads);
+}
+
+getch();
+}
