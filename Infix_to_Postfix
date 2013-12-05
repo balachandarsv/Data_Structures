@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+char data;
+struct node *link;
+};
+struct head
+{
+int count;
+struct node *link;
+};
+void insert(struct head *heads,char x)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current->data=x;
+current->link=heads->link;
+heads->link=current;
+heads->count=heads->count+1;
+}
+void delet(struct head *heads)
+{int val;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+if(heads->count==0)
+{
+
+}
+else
+{
+current=heads->link;
+val=current->data;
+heads->link=current->link;
+heads->count=heads->count-1;
+free(current);
+printf("%c",val);
+}
+}
+int peek(struct head *heads)
+{struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+return current->data;
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->link;
+}
+}
+int priority(char x)
+{
+if(x=='+'||x=='-')
+return 2;
+if(x=='*'||x=='/')
+return 1;
+
+}
+void convert(char array[],struct head *heads)
+{int i;
+for(i=0;array[i];i++)
+{
+if(array[i]=='(')
+insert(heads,'\0');
+else if(array[i]==')')
+{
+delet(heads);
+while(peek(heads)!='\0')
+delet(heads);
+}
+else if(isalpha(array[i]))
+{
+printf("%c",array[i]);
+}
+else
+{
+char x=peek(heads);
+while(heads->count!=0&&priority(x)>=priority(array[i]))
+{
+delet(heads);
+x=peek(heads);
+}
+insert(heads,array[i]);
+}
+}
+while(heads->count!=0)
+delet(heads);
+}
+void main()
+{
+char array[100];
+struct head *heads=(struct head*)malloc(sizeof(struct node));
+clrscr();
+heads->count=0;
+heads->link=NULL;
+printf("Enter the infix expr:");
+scanf("%s",&array);
+convert(array,heads);
+getch();
+}
