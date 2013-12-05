@@ -1,0 +1,148 @@
+#include<iostream.h>
+#include<conio.h>
+#include<string.h>
+typedef struct node
+{
+char data;
+node *left;
+node *right;
+}bnode;
+struct pnode
+{int level;
+bnode *loc;
+};
+class stack
+{
+int top;
+pnode pred[10];
+public:
+stack();
+void push(pnode p);
+pnode peek();
+void pop();
+};
+stack::stack()
+{
+top=-1;
+}
+void  stack::push(pnode p)
+{
+top++;
+pred[top].level=p.level;
+pred[top].loc=p.loc;
+}
+pnode stack::peek()
+{
+return pred[top];
+}
+void stack::pop()
+{
+top--;
+}
+class gtbt
+{
+bnode *head;
+public:
+gtbt();
+void convert();
+void preorder(bnode *t);
+void inorder(bnode *t);
+void postorder(bnode *t);
+void t();
+};
+gtbt::gtbt()
+{
+head=new bnode;
+head->left=NULL;
+head->right=head;
+}
+void gtbt::convert()
+{
+stack s;
+pnode p;
+int lev;
+char name;
+bnode *temp;
+p.level=0;
+p.loc=head;
+s.push(p);
+clrscr();
+cout<<"0 to exit";
+while(1)
+{
+cout<<"\nenter level and name:";
+cin>>lev;
+if(lev==0)break;
+cin>>name;
+temp=new bnode;
+temp->data=name;
+temp->left=NULL;
+temp->right=NULL;
+p=s.peek();
+if(lev>p.level)
+{
+p.loc->left=temp;
+}
+else
+{
+while(p.level>lev)
+{
+s.pop();
+p=s.peek();
+}
+if(p.level<lev)
+{
+cout<<"error";
+return;
+}
+p.loc->right=temp;
+s.pop();
+}
+p.level=lev;
+p.loc=temp;
+s.push(p);
+}
+}
+void gtbt::t()
+{
+cout<<"\npreorder"<<endl;
+preorder(head->left);
+cout<<"\ninorder"<<endl;
+inorder(head->left);
+cout<<"\npostorder"<<endl;
+postorder(head->left);
+}
+void gtbt::preorder(bnode *t)
+{
+if(t!=NULL)
+{
+cout<<t->data<<" ";
+preorder(t->left);
+preorder(t->right);
+}
+}
+void gtbt::inorder(bnode *t)
+{
+if(t!=NULL)
+{
+inorder(t->left);
+cout<<t->data<<" ";
+inorder(t->right);
+}
+}
+void gtbt::postorder(bnode *t)
+{
+if(t!=NULL)
+{
+postorder(t->left);
+postorder(t->right);
+cout<<t->data<<" ";
+}
+}
+void main()
+{
+gtbt gb;
+gb.convert();
+gb.t();
+getch();
+}
