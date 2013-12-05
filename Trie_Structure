@@ -1,0 +1,110 @@
+#include<stdio.h>
+struct trienode
+{
+char word[100];
+struct trienode *next1;
+struct trienode *next2;
+struct trienode *next3;
+};
+void insert(char array[],struct trienode *temp)
+{
+int pos=0,done=0;char cur;
+while(!done)
+{
+struct trienode *newnode=(struct trienode *)malloc(sizeof(struct trienode));
+strcpy(newnode->word,"-");
+newnode->next1=NULL;
+newnode->next2=NULL;
+newnode->next3=NULL;
+cur=array[pos];
+switch(cur)
+{
+case 'a':if(temp->next1==NULL)
+	temp->next1=newnode;
+	temp=temp->next1;
+	break;
+case 'b':if(temp->next2==NULL)
+	temp->next2=newnode;
+	temp=temp->next2;
+	break;
+case 'c':if(temp->next3==NULL)
+	temp->next3=newnode;
+	temp=temp->next3;
+	break;
+case '\0':strcpy(temp->word,array);done=1;
+
+}
+pos++;
+}
+}
+void trie_display(struct trienode *rt)
+  {
+	if (rt!=NULL)
+	{ 		if (strcmp(rt->word, "-")!=0)
+		{
+			printf("%s",rt->word);
+		}
+		trie_display(rt->next1);
+		trie_display(rt->next2);
+		trie_display(rt->next3);
+	}
+  }
+void search(char array[],struct trienode* temp)
+{
+int pos=0,done=0;char cur;
+while(!done)
+{
+struct trienode *newnode=(struct trienode *)malloc(sizeof(struct trienode));
+strcpy(newnode->word,"-");
+newnode->next1=NULL;
+newnode->next2=NULL;
+newnode->next3=NULL;
+cur=array[pos];
+switch(cur)
+{
+case 'a':if(temp->next1==NULL)
+	{printf("\nWrong word");
+		done = 1;break;
+	}
+	temp=temp->next1;
+	break;
+case 'b':if(temp->next2==NULL)
+	{printf("\nWrong word");
+		done = 1;break;
+	}
+	temp=temp->next2;
+	break;
+case 'c':if(temp->next3==NULL)
+	{printf("\nWrong word");
+		done = 1;break;
+	}
+	temp=temp->next3;
+	break;
+case '\0':if (strcmp(temp->word, "-")!=0)
+				  {
+				printf("Your word is present in dictionary");
+					done = 1;
+				  }
+
+}
+pos++;
+}
+
+}
+void main()
+{char array[100];
+struct trienode *node=(struct trienode *)malloc(sizeof(struct trienode));
+clrscr();
+strcpy(node->word,"-");
+node->next1=NULL;
+node->next2=NULL;
+node->next3=NULL;
+scanf("%s",&array);
+insert(array,node);
+scanf("%s",&array);
+insert(array,node);
+trie_display(node);
+scanf("%s",array);
+search(array,node);
+getch();
+}
