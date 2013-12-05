@@ -1,0 +1,33 @@
+#include<stdio.h>
+void binary(int *array,int l,int h,int x)
+{if(l>h)
+printf("Not found ");
+else
+{
+int mid=(h+l)/2;
+if(array[mid]<x)
+{
+ binary(array,mid+1,h,x);
+}
+else if(array[mid]>x)
+{
+binary(array,0,mid-1,x);
+}
+else
+{if(array[mid]==x)
+{
+printf("Found");
+}
+}
+}
+}
+void main()
+{
+int size=5,i,x,r;
+int *array=(int*)malloc(2*size);
+for(i=0;i<size;i++)
+scanf("%d",&*(array+i));
+scanf("%d",&x);
+binary(array,0,size,x);
+ getch();
+}
