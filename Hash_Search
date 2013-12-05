@@ -1,0 +1,80 @@
+#include<stdio.h>
+struct node
+{
+int data;
+struct node *link;
+};
+struct head
+{
+int count;
+struct node *link;
+};
+void insert(struct head *heads,int x)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+if(heads->count==0)
+{
+
+current->data=x;
+current->link=NULL;
+heads->link=current;
+heads->count++;
+}
+else
+{
+current->data=x;
+current->link=heads->link;
+
+heads->link=current;
+heads->count=heads->count+1;
+}
+}
+void display(struct head *heads)
+{
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+while(current!=NULL)
+{
+printf("%d\t",current->data);
+current=current->link;
+}
+}
+void search(struct head *heads,int x)
+{     int y;
+struct node *current=(struct node*)malloc(sizeof(struct node));
+current=heads->link;
+y=heads->count;
+while(y>0)
+{
+if(current->data==x)
+{printf("Found");
+break;
+}
+else
+{current=current->link;y--;}
+}
+}
+void main()
+{int n,i,x,y,se;
+struct head *heads[5];
+for(i=0;i<5;i++)
+{
+heads[i]=(struct head*)malloc(sizeof(struct head));
+heads[i]->link=NULL;
+heads[i]->count=0;
+}
+//struct node *node=(struct head*)malloc(sizeof(struct head));
+clrscr();
+printf("Enter the number ot element");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+scanf("%d",&x);
+y=x%10;
+insert(heads[y],x);
+}
+scanf("%d",&se);
+y=se%5;
+search(heads[y],se);
+getch();
+}
